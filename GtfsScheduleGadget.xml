@@ -254,14 +254,14 @@
             var ct = 0;
             var templist = [];
             for (var i = 0; len = res.length, i < len; i++) {
-                var stop_time = new Date(res[i].stop_time);
-                stop_time.setMinutes(stop_time.getMinutes() + offset);
-                //var stop_time = res[i].stop_time;
-                console.log('Departure: ' + stop_time + '     ' + 'Now: ' + now);
-                if (stop_time > now) {
+                var departure_time = new Date(res[i].departure_time);
+                departure_time.setMinutes(departure_time.getMinutes() + offset);
+                //var departure_time = res[i].departure_time;
+                console.log('Departure: '+departure_time + '     ' + 'Now: ' + now);
+                if (departure_time > now) {
                     templist.push(res[i]);
                 }
-                if (stop_time > now && ct < numRows) {
+                if (departure_time > now && ct < numRows) {
                     ct++;
                     addRow(res[i]);
                 }
