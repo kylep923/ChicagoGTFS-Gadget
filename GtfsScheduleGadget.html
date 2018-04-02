@@ -120,15 +120,11 @@
                     } else {
                         // load stoptimes for current day -- only on initialization
                         for (var i = 0; len = res.length, i < len; i++) {
-                            console.log(res[i]);
                             stoplist.push(res[i]);
-                            if (i === (len - 1)){
-                                initalizeTable(stoplist);
-                            }
                         }
                         // Create table for the first time
                         console.log(stoplist);
-
+                        initalizeTable(stoplist);
                     }
                 }
             });
