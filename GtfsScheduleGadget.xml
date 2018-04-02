@@ -8,10 +8,10 @@
  <UserPref name="num_rows" display_name="Number of rows displayed at a time" required="true" default_value="25" />
  <UserPref name="header_size" display_name="Header Font Size in px" required="true" default_value="30" />
  <UserPref name="row_size" display_name="Row Font Size in px" required="true" default_value="25" />
- <UserPref name="labels" display_name="Labels On" required="true" default_value="true" datatype="bool" /> 
+ <UserPref name="labels" display_name="Labels On" required="true" default_value="true" datatype="bool" />
  <UserPref name="rdW" display_name="Width" required="true" default_value="280" datatype="hidden" />
- <UserPref name="rdH" display_name="Height" required="true" default_value="190" datatype="hidden" /> 
-	 
+ <UserPref name="rdH" display_name="Height" required="true" default_value="190" datatype="hidden" />
+
  </ModulePrefs>
 <Content type="html">
 
@@ -25,7 +25,7 @@
             width: __UP_rdW__px;
             height: __UP_rdH__px;
         }
-        
+
         .stoptable {
             font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -44,19 +44,19 @@
 			border: 1px solid #ddd;
             padding: 8px;
 		}
-        
+
         .stoptable tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        
+
         .stoptable tr:nth-child(odd) {
             background-color: #FFFFFF;
         }
-        
+
         .stoptable tr:hover {
             background-color: #ddd;
         }
-        
+
         .stoptable th {
             padding-top: 12px;
             padding-bottom: 12px;
@@ -64,7 +64,7 @@
             background-color: #000000;
             color: white;
         }
-        
+
         body {
             background: transparent;
         }
@@ -125,7 +125,7 @@
                 // TEST URL
                 //url: "http://localhost:5000/?stop_id=" + stopid + "&current_time=" + date,
                 // PROD URL
-                url: "https://young-retreat-13285.herokuapp.com/?stop_id=" + stopid + "&current_time=" + date,
+                url: "https://nameless-oasis-95014.herokuapp.com/?stop_id=" + stopid + "&current_time=" + date,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {
@@ -236,15 +236,15 @@
             var stoptime = document.createTextNode('Departure');
             th3.appendChild(stoptime);
 
-            var th4 = document.createElement('th');
-            var platform = document.createTextNode('Platform');
-            th4.appendChild(platform);
+            //var th4 = document.createElement('th');
+            //var platform = document.createTextNode('Platform');
+            //th4.appendChild(platform);
 
             // Add Headers to Row
             thr.appendChild(th1);
             thr.appendChild(th2);
             thr.appendChild(th3);
-            thr.appendChild(th4);
+            //thr.appendChild(th4);
             // add header row to Table
             table.appendChild(thr);
             document.getElementById("myDiv").appendChild(table2);
