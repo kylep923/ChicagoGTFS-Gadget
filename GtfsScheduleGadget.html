@@ -237,6 +237,7 @@
                 var departure_time = new Date(res[i].departure_time);
                 departure_time.setMinutes(departure_time.getMinutes() + offset);
                 //var departure_time = res[i].departure_time;
+                console.log('Departure: '+departure_time + '     ' + 'Now: ' + now);
                 if (departure_time > now) {
                     templist.push(res[i]);
                 }
