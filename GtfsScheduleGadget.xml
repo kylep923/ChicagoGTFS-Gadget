@@ -156,11 +156,11 @@
             var table = document.getElementById("stoptable");
             var now = new Date();
             var offset = now.getTimezoneOffset();
-            var stop_time = new Date(row.stop_time);
-            stop_time.setMinutes(stop_time.getMinutes() + offset);
+            var departure_time = new Date(row.departure_time);
+            departure_time.setMinutes(departure_time.getMinutes() + offset);
 
             // Get minutes difference b/t now and the departure time
-            var diff = stop_time - now;
+            var diff = departure_time - now;
             var minutes = Math.round((diff / 1000) / 60);
 
             var tr = document.createElement('tr');
@@ -175,7 +175,7 @@
             var text3 = document.createTextNode(minutes + " min");
 
             /*
-            var text3 = document.createTextNode(stop_time.toLocaleTimeString([], {
+            var text3 = document.createTextNode(departure_time.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             }));
@@ -292,9 +292,9 @@
             // Loop through the table rows and check if the stop times have expired
             current_index = 0;
             for (var x = 1; x < table.rows.length; x++) {
-                var stop_time = new Date(stoplist[current_index].stop_time);
-                stop_time.setMinutes(stop_time.getMinutes() + offset);
-                departureDate = stop_time;
+                var departure_time = new Date(stoplist[current_index].departure_time);
+                departure_time.setMinutes(departure_time.getMinutes() + offset);
+                departureDate = departure_time;
                 if (now > departureDate) {
                     console.log("now: " + now + "  |  top row: " + departureDate);
                     console.log(table.rows[1]);
@@ -312,10 +312,10 @@
             }
             current_index = 0;
             for (var x = 1; x < table.rows.length; x++) {
-                var stop_time = new Date(stoplist[current_index].stop_time);
-                stop_time.setMinutes(stop_time.getMinutes() + offset);
+                var departure_time = new Date(stoplist[current_index].departure_time);
+                departure_time.setMinutes(departure_time.getMinutes() + offset);
                 // Calc mins before departure
-                var diff = stop_time - now;
+                var diff = departure_time - now;
                 var minutes = Math.round((diff / 1000) / 60);
                 //console.log(table.rows[x].cells[2].innerHTML);
                 table.rows[x].cells[2].innerHTML = minutes + " min";
