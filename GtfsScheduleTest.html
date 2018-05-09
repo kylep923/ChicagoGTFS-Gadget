@@ -58,7 +58,9 @@
         // PREFS
         //var prefs = new gadgets.Prefs();
         var display_time = 60; //prefs.getString("timeout"); //
-        var stopid = '79th Red Line Station'; //prefs.getString("user_stop_id"); //'RICHMOND HILL CENTRE';
+        var unvarified_stopid = "45th St S & 18th Ave S"; //prefs.getString("user_stop_id"); //'Washington/Wabash';  //45th St S & 18th Ave S //RICHMOND HILL CENTRE
+        var agency_key = "MATBUS"; //crt //MATBUS //YRT
+        var stopid = unvarified_stopid.replace('&', '%26');
         var numRows = 50; //prefs.getString("num_rows"); // 25
         stopid = stopid.toUpperCase();
         // GLOBALS
@@ -104,9 +106,9 @@
         function loadStops(date, loadTomorrow) {
             $.ajax({
                 // TEST URL
-                //url: "http://localhost:5000/?stop_id=" + stopid + "&current_time=" + date,
+                url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 // PROD URL
-                url: "https://nameless-oasis-95014.herokuapp.com/?stop_id=" + stopid + "&current_time=" + date,
+                //url: "https://nameless-oasis-95014.herokuapp.com/?agency_key " + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {
@@ -287,8 +289,12 @@
             for (var y = 0; y < numDeleted; y++) {
                 console.log("delete: " + stoplist[0]);
                 stoplist.splice(0, 1);
-                addRow(stoplist[numRows - 1]);
-                console.log("add: " + stoplist[numRows - 1]);
+				if(stoplist[numRows - 1]){
+					addRow(stoplist[numRows - 1]);
+					console.log("add: " + stoplist[numRows - 1]);
+				}else{
+					console.log("Stoptimess in array < set ammout");
+				}
             }
             current_index = 0;
             for (var x = 1; x < table.rows.length; x++) {

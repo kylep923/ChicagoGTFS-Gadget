@@ -5,6 +5,7 @@
  <ModulePrefs title="Revel Transit Gadget" description="Displays YRT Transit info for a stop" author="RevelDigital" background="transparent">
 
  <UserPref name="user_stop_id" display_name="Stop Name ex:(RICHMOND HILL CENTRE)" default_value="" />
+ <UserPref name="agency_key" display_name="Stop Name ex:(YRT)" default_value="" />
  <UserPref name="num_rows" display_name="Number of rows displayed at a time" required="true" default_value="25" />
  <UserPref name="header_size" display_name="Header Font Size in px" required="true" default_value="30" />
  <UserPref name="row_size" display_name="Row Font Size in px" required="true" default_value="25" />
@@ -78,9 +79,8 @@
         var prefs = new gadgets.Prefs();
         var display_time = 60;
         var stopid = prefs.getString("user_stop_id"); //'RICHMOND HILL CENTRE';
+        var agency_key = prefs.getString("agency_key");
         var numRows = prefs.getString("num_rows"); // 25
-
-        console.log(numRows);
         stopid = stopid.toUpperCase();
         // GLOBALS
         var timeout = 1; // MIGHT BECOME A PREF
@@ -125,9 +125,9 @@
         function loadStops(date, loadTomorrow) {
             $.ajax({
                 // TEST URL
-                //url: "http://localhost:5000/?stop_id=" + stopid + "&current_time=" + date,
+                //url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 // PROD URL
-                url: "https://nameless-oasis-95014.herokuapp.com/?stop_id=" + stopid + "&current_time=" + date,
+                url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {
@@ -257,7 +257,6 @@
                 var departure_time = new Date(res[i].departure_time);
                 departure_time.setMinutes(departure_time.getMinutes() + offset);
                 //var departure_time = res[i].departure_time;
-                console.log('Departure: '+departure_time + '     ' + 'Now: ' + now);
                 if (departure_time > now) {
                     templist.push(res[i]);
                 }
@@ -296,8 +295,6 @@
                 departure_time.setMinutes(departure_time.getMinutes() + offset);
                 departureDate = departure_time;
                 if (now > departureDate) {
-                    console.log("now: " + now + "  |  top row: " + departureDate);
-                    console.log(table.rows[1]);
                     table.deleteRow(1);
                     numDeleted++;
                 }
@@ -305,10 +302,13 @@
             }
             // Replace deleted rows with new ones
             for (var y = 0; y < numDeleted; y++) {
-                console.log("delete: " + stoplist[0]);
                 stoplist.splice(0, 1);
-                addRow(stoplist[numRows - 1]);
-                console.log("add: " + stoplist[numRows - 1]);
+                if(stoplist[numRows - 1]){
+					addRow(stoplist[numRows - 1]);
+					console.log("add: " + stoplist[numRows - 1]);
+				}else{
+					console.log("Stoptimess in array < set ammout");
+				}
             }
             current_index = 0;
             for (var x = 1; x < table.rows.length; x++) {
@@ -317,7 +317,6 @@
                 // Calc mins before departure
                 var diff = departure_time - now;
                 var minutes = Math.round((diff / 1000) / 60);
-                //console.log(table.rows[x].cells[2].innerHTML);
                 table.rows[x].cells[2].innerHTML = minutes + " min";
                 current_index++;
             }
