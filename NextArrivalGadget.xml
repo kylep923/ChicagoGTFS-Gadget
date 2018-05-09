@@ -125,34 +125,34 @@
 
 
        function addRow(row) {
-            let paragraph = document.getElementById("paragraph");
-            let now = new Date();
-            let offset = now.getTimezoneOffset();
-            let departure_time = new Date(row.departure_time);
+            var paragraph = document.getElementById("paragraph");
+            var now = new Date();
+            var offset = now.getTimezoneOffset();
+            var departure_time = new Date(row.departure_time);
             departure_time.setMinutes(departure_time.getMinutes() + offset);
 
             // Get minutes difference b/t now and the departure time
-            let diff = departure_time - now;
-            let minutes = Math.round((diff / 1000) / 60);
+            var diff = departure_time - now;
+            var minutes = Math.round((diff / 1000) / 60);
             paragraph.innerHTML = minutes;
         }
 
 
 
         function initalizeTable(res) {
-            let now = new Date();
+            var now = new Date();
             now.setSeconds(0);
-            let offset = now.getTimezoneOffset();
-            let thirty_min_ahead = new Date();
+            var offset = now.getTimezoneOffset();
+            var thirty_min_ahead = new Date();
             thirty_min_ahead.setMinutes(now.getMinutes() + display_time);
 
-            let ct = 0;
-            let templist = [];
-            let isFirst = true;
-            for (let i = 0; len = res.length, i < len; i++) {
-                let departure_time = new Date(res[i].departure_time);
+            var ct = 0;
+            var templist = [];
+            var isFirst = true;
+            for (var i = 0; len = res.length, i < len; i++) {
+                var departure_time = new Date(res[i].departure_time);
                 departure_time.setMinutes(departure_time.getMinutes() + offset);
-                //let departure_time = res[i].departure_time;
+                //var departure_time = res[i].departure_time;
                 console.log('Departure: '+departure_time + '     ' + 'Now: ' + now);
                 if (departure_time > now) {
                     templist.push(res[i]);
@@ -180,15 +180,15 @@
 
 
         function updateList() {
-            let paragraph = document.getElementById("paragraph");
-            let now = new Date();
+            var paragraph = document.getElementById("paragraph");
+            var now = new Date();
             now.setSeconds(0);
-            let offset = now.getTimezoneOffset();
+            var offset = now.getTimezoneOffset();
             numDeleted = 0;
             // Loop through the table rows and check if the stop times have expired
             current_index = 0;
-            for (let x = 1; x < stoplist.length; x++) {
-                let departure_time = new Date(stoplist[current_index].departure_time);
+            for (var x = 1; x < stoplist.length; x++) {
+                var departure_time = new Date(stoplist[current_index].departure_time);
                 departure_time.setMinutes(departure_time.getMinutes() + offset);
                 departureDate = departure_time;
                 if (now > departureDate) {
@@ -197,7 +197,7 @@
                 current_index++;
             }
             // Replace deleted rows with new ones
-            for (let y = 0; y < numDeleted; y++) {
+            for (var y = 0; y < numDeleted; y++) {
                 console.log("delete: " + stoplist[0]);
                 stoplist.splice(0, 1);
 				if(stoplist[numRows - 1]){
@@ -207,11 +207,11 @@
 					console.log("Stoptimess in array < set ammout");
 				}
             }
-            let departure_time = new Date(stoplist[0].departure_time);
+            var departure_time = new Date(stoplist[0].departure_time);
             departure_time.setMinutes(departure_time.getMinutes() + offset);
             // Calc mins before departure
-            let diff = departure_time - now;
-            let minutes = Math.round((diff / 1000) / 60);
+            var diff = departure_time - now;
+            var minutes = Math.round((diff / 1000) / 60);
             paragraph.innerHTML = minutes;
         }
     </script>
