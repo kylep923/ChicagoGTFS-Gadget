@@ -78,7 +78,8 @@
         // PREFS
         var prefs = new gadgets.Prefs();
         var display_time = 60;
-        var stopid = prefs.getString("user_stop_id"); //'RICHMOND HILL CENTRE';
+        var unvarified_stopid = prefs.getString("user_stop_id");
+        var stopid = unvarified_stopid.replace('&', '%26'); //'RICHMOND HILL CENTRE';
         var agency_key = prefs.getString("agency_key");
         var numRows = prefs.getString("num_rows"); // 25
         stopid = stopid.toUpperCase();
