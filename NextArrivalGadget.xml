@@ -42,7 +42,9 @@
 </head>
 
 <body>
-    <div id="myDiv"></div>
+    <div id="myDiv">
+        <p id="paragraph"></p>
+    </div>
     <script>
         // PREFS
         var prefs = new gadgets.Prefs();
