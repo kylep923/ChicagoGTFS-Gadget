@@ -58,7 +58,7 @@
         // PREFS
         //var prefs = new gadgets.Prefs();
         var display_time = 60; //prefs.getString("timeout"); //
-        var unvarified_stopid = "45th St S & 18th Ave S"; //prefs.getString("user_stop_id"); //'Washington/Wabash';  //45th St S & 18th Ave S //RICHMOND HILL CENTRE
+        var unvarified_stopid = "NDSU Res Pk Dr & 17th Ave N"; //prefs.getString("user_stop_id"); //'Washington/Wabash';  //45th St S & 18th Ave S //RICHMOND HILL CENTRE
         var agency_key = "MATBUS"; //crt //MATBUS //YRT
         var stopid = unvarified_stopid.replace('&', '%26');
         var numRows = 50; //prefs.getString("num_rows"); // 25
@@ -106,9 +106,9 @@
         function loadStops(date, loadTomorrow) {
             $.ajax({
                 // TEST URL
-                url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                //url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 // PROD URL
-                //url: "https://nameless-oasis-95014.herokuapp.com/?agency_key " + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {
