@@ -70,6 +70,7 @@
             console.log(Client.getDeviceTimeZoneName());
         }
         var curr_day = moment();
+        console.log(curr_day.format());
         var tomorrow = moment().add(1, 'days');
 
         var cur_time = curr_day.utc().format();
@@ -150,6 +151,7 @@
             var isFirst = true;
             for (var i = 0; len = res.length, i < len; i++) {
                 var departure_time = moment(res[i].departure_time);
+                console.log(moment(res[i].departure_time));
                 if (departure_time > now) {
                     templist.push(res[i]);
                     if(isFirst){
