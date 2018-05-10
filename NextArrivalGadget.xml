@@ -144,7 +144,7 @@
 
         function initalizeTable(res) {
             var now = moment();
-            console.log(Now: + now);
+            console.log("Now:" + now);
             var thirty_min_ahead = moment().add(30, 'mins');
 
             var ct = 0;
@@ -152,7 +152,7 @@
             var isFirst = true;
             for (var i = 0; len = res.length, i < len; i++) {
                 var departure_time = moment(res[i].departure_time);
-                console.log(Departure: + moment(res[i].departure_time).format());
+                console.log("Departure:" + moment(res[i].departure_time).format());
                 if (departure_time > now) {
                     templist.push(res[i]);
                     if(isFirst){
