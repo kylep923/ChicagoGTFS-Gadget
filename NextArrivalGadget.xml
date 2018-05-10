@@ -136,7 +136,7 @@
             var diff = departure_time - now;
             var minutes = Math.round((diff / 1000) / 60);
             paragraph.innerHTML = minutes;
-        }}
+        }
 
         function initalizeTable(res) {
             var now = moment();
