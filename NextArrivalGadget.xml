@@ -117,14 +117,14 @@
                             stoplist.push(res[i]);
                             tomorrow_stoplist.push(res[i]);
                         }
-                        console.log(stoplist);
+                        //console.log(stoplist);
                     } else {
                         // load stoptimes for current day -- only on initialization
                         for (var i = 0; len = res.length, i < len; i++) {
                             stoplist.push(res[i]);
                         }
                         // Create table for the first time
-                        console.log(stoplist);
+                        //console.log(stoplist);
                         initalizeTable(stoplist);
                     }
                 }
@@ -151,7 +151,7 @@
             var isFirst = true;
             for (var i = 0; len = res.length, i < len; i++) {
                 var departure_time = moment(res[i].departure_time);
-                console.log(moment(res[i].departure_time));
+                console.log(moment(res[i].departure_time).format());
                 if (departure_time > now) {
                     templist.push(res[i]);
                     if(isFirst){
