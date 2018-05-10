@@ -62,11 +62,12 @@
         var stoplist = [];
         var tomorrow_stoplist = [];
 
+        moment.locale("__MSG_Lang__");
+
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneName());
             console.log(Client.getDeviceTimeZoneName());
-            console.log(moment.tz.setDefault(Client.getDeviceTimeZoneName()));
         }
         var curr_day = moment();
         var tomorrow = moment().add(1, 'days');
