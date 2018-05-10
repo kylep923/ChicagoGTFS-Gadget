@@ -144,7 +144,7 @@
 
         function initalizeTable(res) {
             var now = moment();
-            console.log("Now:" + now);
+            console.log("Now:" + now.format());
             var thirty_min_ahead = moment().add(30, 'mins');
 
             var ct = 0;
