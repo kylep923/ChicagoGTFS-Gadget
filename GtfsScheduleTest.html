@@ -54,7 +54,6 @@
     </style>
 </head>
 
-
 <body>
     <div id="myDiv"></div>
     <script>
@@ -74,6 +73,7 @@
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneName());
+            console.log(moment.tz.setDefault(Client.getDeviceTimeZoneID()));
         }
         let curr_day = moment();
         let tomorrow = moment().add(1, 'days');
