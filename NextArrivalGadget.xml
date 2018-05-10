@@ -6,6 +6,7 @@
 
  <UserPref name="user_stop_id" display_name="Stop Name ex:(RICHMOND HILL CENTRE)" default_value="" />
  <UserPref name="agency_key" display_name="Agency Key ex:(YRT)" default_value="" />
+ <UserPref name="font_size" display_name="Font Size" default_value="25px" />
  <UserPref name="text_color" display_name="Text Color" default_value="white" />
  <UserPref name="num_rows" display_name="Number of rows displayed at a time" required="true" default_value="25" />
  <UserPref name="header_size" display_name="Header Font Size in px" required="true" default_value="30" />
@@ -33,8 +34,8 @@
             width: 100%;
             height: 100%;
             margin: auto;
-            font-size: 90%;
-            color: white;
+            font-size: __UP_font_size__px;
+            color: __UP_text_color__;
         }
 
         body {
