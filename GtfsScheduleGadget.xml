@@ -95,10 +95,10 @@
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneName());
         }
-        let curr_day = moment();
-        let tomorrow = moment().add(1, 'days');
+        var curr_day = moment();
+        var tomorrow = moment().add(1, 'days');
 
-        let cur_time = curr_day.utc().format();
+        var cur_time = curr_day.utc().format();
         loadStops(cur_time, false);
 
         // Check every minute for expired stoptimes
@@ -115,10 +115,10 @@
                 console.log("CHECKING IF TOMORROW LIST IS UPTO DATE");
                 if (tomorrow_stoplist.length < 1 || tomorrow_stoplist == undefined) {
                     console.log("TOMORROW LIST NOT UP TO DATE: UPDATING");
-                    let tomorrow_str = tomorrow.utc().format();
+                    var tomorrow_str = tomorrow.utc().format();
                     loadStops(tomorrow_str, true);
                 }
-                let now = moment();
+                var now = moment();
                 if (now > tomorrow) {
                     console.log("MOVNG TO THE NEXT DAY");
                     tomorrow = now.add(1, 'day');
@@ -159,8 +159,8 @@
 
        function addRow(row) {
             var table = document.getElementById("stoptable");
-            let now = moment();
-            let departure_time = moment(row.departure_time);
+            var now = moment();
+            var departure_time = moment(row.departure_time);
 
             // Get minutes difference b/t now and the departure time
             var diff = departure_time - now;
@@ -190,8 +190,8 @@
 
 
         function initalizeTable(res) {
-            let now = moment();
-            let thirty_min_ahead = moment().add(30, 'mins');
+            var now = moment();
+            var thirty_min_ahead = moment().add(30, 'mins');
             // Create Table
             var table = document.createElement('table');
             table.setAttribute("class", "stoptable");
