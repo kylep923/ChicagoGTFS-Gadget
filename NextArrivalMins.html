@@ -22,6 +22,9 @@
     </style>
 </head>
 
+<script src="https://reveldigital.github.io/reveldigital-gadgets/third-party/moment-with-locales.min.js" type="text/javascript"></script>
+<script src="https://reveldigital.github.io/reveldigital-gadgets/third-party/moment-timezone-with-data.min.js" type="text/javascript"></script>
+
 <body>
     <div id="myDiv">
         <p id="paragraph"></p>
@@ -41,11 +44,13 @@
         let tomorrow_stoplist = [];
 
         // INIT GLOBALS
-        let curr_day = new Date();
-        let tmpDay = new Date();
-        let tomorrow = new Date(tmpDay.setTime(tmpDay.getTime() + 1 * 86400000));
+        if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
+            moment.tz.setDefault(Client.getDeviceTimeZoneName());
+        }
+        let curr_day = moment();
+        let tomorrow = moment().add(1, 'days');
 
-        let cur_time = curr_day.toUTCString();
+        let cur_time = curr_day.utc().format();
         loadStops(cur_time, false);
 
         // Check every minute for expired stoptimes
@@ -62,14 +67,13 @@
                 console.log("CHECKING IF TOMORROW LIST IS UPTO DATE");
                 if (tomorrow_stoplist.length < 1 || tomorrow_stoplist == undefined) {
                     console.log("TOMORROW LIST NOT UP TO DATE: UPDATING");
-                    let tomorrow_str = tomorrow.toUTCString();
+                    let tomorrow_str = tomorrow.utc().format();
                     loadStops(tomorrow_str, true);
                 }
-                let now = new Date();
+                let now = moment();
                 if (now > tomorrow) {
                     console.log("MOVNG TO THE NEXT DAY");
-                    curr_day = now;
-                    tomorrow = new Date(curr_day.setTime(curr_day.getTime() + 1 * 86400000));
+                    tomorrow = now.add(1, 'day');
                     tomorrow_stoplist = [];
                 }
             }, 60 * 60000);
@@ -107,34 +111,23 @@
 
         function addRow(row) {
             let paragraph = document.getElementById("paragraph");
-            let now = new Date();
-            let offset = now.getTimezoneOffset();
-            let departure_time = new Date(row.departure_time);
-            departure_time.setMinutes(departure_time.getMinutes() + offset);
-
+            let now = moment();
+            let departure_time = moment(row.departure_time);
             // Get minutes difference b/t now and the departure time
             let diff = departure_time - now;
             let minutes = Math.round((diff / 1000) / 60);
             paragraph.innerHTML = minutes;
         }
 
-
-
         function initalizeTable(res) {
-            let now = new Date();
-            now.setSeconds(0);
-            let offset = now.getTimezoneOffset();
-            let thirty_min_ahead = new Date();
-            thirty_min_ahead.setMinutes(now.getMinutes() + display_time);
+            let now = moment();
+            let thirty_min_ahead = moment().add(30, 'mins');
 
             let ct = 0;
             let templist = [];
             let isFirst = true;
             for (let i = 0; len = res.length, i < len; i++) {
-                let departure_time = new Date(res[i].departure_time);
-                departure_time.setMinutes(departure_time.getMinutes() + offset);
-                //let departure_time = res[i].departure_time;
-                console.log('Departure: '+departure_time + '     ' + 'Now: ' + now);
+                let departure_time = moment(res[i].departure_time);
                 if (departure_time > now) {
                     templist.push(res[i]);
                     if(isFirst){
@@ -162,17 +155,14 @@
 
         function updateList() {
             let paragraph = document.getElementById("paragraph");
-            let now = new Date();
-            now.setSeconds(0);
-            let offset = now.getTimezoneOffset();
+            let now = moment();
+
             numDeleted = 0;
             // Loop through the table rows and check if the stop times have expired
             current_index = 0;
             for (let x = 1; x < stoplist.length; x++) {
-                let departure_time = new Date(stoplist[current_index].departure_time);
-                departure_time.setMinutes(departure_time.getMinutes() + offset);
-                departureDate = departure_time;
-                if (now > departureDate) {
+                let departure_time = moment(stoplist[current_index].departure_time);
+                if (now > departure_time) {
                     numDeleted++;
                 }
                 current_index++;
@@ -188,9 +178,7 @@
 					console.log("Stoptimess in array < set ammout");
 				}
             }
-            let departure_time = new Date(stoplist[0].departure_time);
-            departure_time.setMinutes(departure_time.getMinutes() + offset);
-            // Calc mins before departure
+            let departure_time = moment(stoplist[0].departure_time);
             let diff = departure_time - now;
             let minutes = Math.round((diff / 1000) / 60);
             paragraph.innerHTML = minutes;
