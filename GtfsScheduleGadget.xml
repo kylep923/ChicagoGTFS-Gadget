@@ -333,7 +333,7 @@
                         table.rows[x].cells[2].innerHTML = minutes;
                     }
                     current_index++;
-                }else{
+            }else{
                     var tr = document.createElement('tr');
 
                     var td1 = document.createElement('td');
@@ -353,7 +353,6 @@
                     tr.appendChild(td3);
 
                     table.appendChild(tr);
-                }
             }
         }
     </script>
