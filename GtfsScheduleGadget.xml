@@ -94,6 +94,7 @@
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneName());
+            timezone = Client.getDeviceTimeZoneName();
         }
         var curr_day = moment();
         var tomorrow = moment().add(1, 'days');
@@ -130,9 +131,9 @@
         function loadStops(date, loadTomorrow) {
             $.ajax({
                 // TEST URL
-                //url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                //url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date + "&time_zone=" + timezone,
                 // PROD URL
-                url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date + "&time_zone=" + timezone,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {

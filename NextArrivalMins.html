@@ -82,9 +82,9 @@
         function loadStops(date, loadTomorrow) {
             $.ajax({
                 // TEST URL
-                //url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                url: "http://localhost:5000/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 // PROD URL
-                url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
+                //url: "https://nameless-oasis-95014.herokuapp.com/?agency_key=" + agency_key + "&stop_id=" + stopid + "&current_time=" + date,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(res) {
@@ -177,6 +177,9 @@
 				}else{
 					console.log("Stoptimess in array < set ammout");
 				}
+            }
+            if(stoplist[0]){
+
             }
             let departure_time = moment(stoplist[0].departure_time);
             let diff = departure_time - now;
