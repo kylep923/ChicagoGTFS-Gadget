@@ -296,7 +296,7 @@
                 var diff = departure_time - now;
                 var minutes = Math.round((diff / 1000) / 60);
                 //console.log(table.rows[x].cells[2].innerHTML);
-                table.rows[x].cells[2].innerHTML = minutes + " min";
+                table.rows[x].cells[2].innerHTML = departure_time.format('hh:mm');
                 current_index++;
             }
         }

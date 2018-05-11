@@ -67,7 +67,7 @@
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneID) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneID());
-            timezone = Client.getDeviceTimeID();
+            timezone = Client.getDeviceTimeZoneID();
         }
         var curr_day = moment();
         console.log(curr_day.format());
@@ -206,7 +206,7 @@
             var departure_time = moment(stoplist[0].departure_time);
             var diff = departure_time - now;
             var minutes = Math.round((diff / 1000) / 60);
-            paragraph.innerHTML = minutes;
+            paragraph.innerHTML = departure_time.format('hh:mm');
         }
     </script>
 </body>
