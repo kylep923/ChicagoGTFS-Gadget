@@ -162,14 +162,19 @@
 
        function addRow(row) {
             var table = document.getElementById("stoptable");
-            let now = moment();
+            var now = moment();
             if(row.departure_time){
-                let departure_time = moment(row.departure_time).format('hh:mm');
-
                 // Get minutes difference b/t now and the departure time
+                var departure_time = moment(row.departure_time);
                 var diff = departure_time - now;
                 var minutes = Math.round((diff / 1000) / 60);
-
+                var hours = Math.floor(minutes / 60);
+                if(hours >= 1){
+                    minutes = minutes - (hours * 60);
+                    departure_time = hours + "h " + minutes + "m";
+                }else{
+                    departure_time = minutes + "min";
+                }
                 var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
