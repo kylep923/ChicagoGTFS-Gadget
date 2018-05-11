@@ -91,8 +91,10 @@
         var stoplist = [];
         var tomorrow_stoplist = [];
 
+        var timezone = "not set";
+
         // INIT GLOBALS
-        if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
+        if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneID) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneID());
             timezone = Client.getDeviceTimeZoneID();
         }

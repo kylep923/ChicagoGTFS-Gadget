@@ -62,7 +62,7 @@
         var stoplist = [];
         var tomorrow_stoplist = [];
 
-        moment.locale("__MSG_Lang__");
+        var timezone = "not set";
 
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
