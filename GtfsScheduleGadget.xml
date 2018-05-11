@@ -333,6 +333,7 @@
                         table.rows[x].cells[2].innerHTML = minutes;
                     }
                     current_index++;
+                }
             }else{
                 var tr = document.createElement('tr');
 
