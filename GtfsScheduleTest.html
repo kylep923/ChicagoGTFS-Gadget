@@ -143,7 +143,7 @@
         function addRow(row) {
             var table = document.getElementById("stoptable");
             let now = moment();
-            let departure_time = moment(row.departure_time);
+            let departure_time = moment(row.departure_time).format('hh:mm');
 
             // Get minutes difference b/t now and the departure time
             var diff = departure_time - now;
@@ -157,7 +157,7 @@
 
             var text1 = document.createTextNode(row.route);
             var text2 = document.createTextNode(row.destination);
-            var text3 = document.createTextNode(minutes + " min");
+            var text3 = document.createTextNode(departure_time);
 
             td1.appendChild(text1);
             td2.appendChild(text2);

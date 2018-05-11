@@ -302,7 +302,7 @@
             var table = document.getElementById("stoptable");
             var now = moment();
             if(stoplist.length > 0 && table.rows.length > 0){
-                if(table.rows[0].cells[0].innerHTML = "Sorry"){
+                if(table.rows[1].cells[0].innerHTML == "Sorry"){
                     table.deleteRow(1);
                 }
                 numDeleted = 0;
@@ -343,7 +343,7 @@
                     current_index++;
                 }
             }else{
-                if(table.rows[0].cells[0].innerHTML = "Sorry"){
+                if(table.rows[1].cells[0].innerHTML == "Sorry"){
                     table.deleteRow(1);
                 }
                 var tr = document.createElement('tr');
