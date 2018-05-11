@@ -117,14 +117,12 @@
                             stoplist.push(res[i]);
                             tomorrow_stoplist.push(res[i]);
                         }
-                        //console.log(stoplist);
                     } else {
                         // load stoptimes for current day -- only on initialization
                         for (var i = 0; len = res.length, i < len; i++) {
                             stoplist.push(res[i]);
                         }
                         // Create table for the first time
-                        //console.log(stoplist);
                         initalizeTable(stoplist);
                     }
                 }
@@ -135,34 +133,37 @@
        function addRow(row) {
             let paragraph = document.getElementById("paragraph");
             let now = moment();
-            let departure_time = moment(row.departure_time).format('hh:mm');
-            // Get minutes difference b/t now and the departure time
-            let diff = departure_time - now;
-            let minutes = Math.round((diff / 1000) / 60);
-            paragraph.innerHTML = departure_time;
+            if(row.departure){
+                let departure_time = moment(row.departure_time);
+                // Get minutes difference b/t now and the departure time
+                let diff = departure_time - now;
+                let minutes = Math.round((diff / 1000) / 60);
+                paragraph.innerHTML = minutes;
+            }else{
+                paragraph.innerHTML = "?";
+            }
         }
 
         function initalizeTable(res) {
             var now = moment();
-            console.log("Now:" + now.format());
-            var thirty_min_ahead = moment().add(30, 'mins');
-
             var ct = 0;
             var templist = [];
             var isFirst = true;
-            for (var i = 0; len = res.length, i < len; i++) {
-                var departure_time = moment(res[i].departure_time);
-                console.log("Departure:" + moment(res[i].departure_time).format());
-                if (departure_time > now) {
-                    templist.push(res[i]);
-                    if(isFirst){
-                        addRow(res[i]);
-                        isFirst = false;
+            if(res.length > 0){
+                for (var i = 0; len = res.length, i < len; i++) {
+                    var departure_time = moment(res[i].departure_time);
+                    if (departure_time > now) {
+                        templist.push(res[i]);
+                        if(isFirst){
+                            addRow(res[i]);
+                            isFirst = false;
+                        }
                     }
                 }
+                stoplist = templist;
+            }else{
+                addRow({});
             }
-            stoplist = templist;
-            console.log(stoplist);
         }
 
 
@@ -181,32 +182,35 @@
         function updateList() {
             var paragraph = document.getElementById("paragraph");
             var now = moment();
-
-            numDeleted = 0;
-            // Loop through the table rows and check if the stop times have expired
-            current_index = 0;
-            for (var x = 1; x < stoplist.length; x++) {
-                var departure_time = moment(stoplist[current_index].departure_time);
-                if (now > departure_time) {
-                    numDeleted++;
+            if(stoplist.length > 0){
+                numDeleted = 0;
+                // Loop through the table rows and check if the stop times have expired
+                current_index = 0;
+                for (var x = 1; x < stoplist.length; x++) {
+                    var departure_time = moment(stoplist[current_index].departure_time);
+                    if (now > departure_time) {
+                        numDeleted++;
+                    }
+                    current_index++;
                 }
-                current_index++;
+                // Replace deleted rows with new ones
+                for (var y = 0; y < numDeleted; y++) {
+                    console.log("delete: " + stoplist[0]);
+                    stoplist.splice(0, 1);
+                    if(stoplist[numRows - 1]){
+                        addRow(stoplist[numRows - 1]);
+                        console.log("add: " + stoplist[numRows - 1]);
+                    }else{
+                        console.log("Stoptimess in array < set ammout");
+                    }
+                }
+                var departure_time = moment(stoplist[0].departure_time);
+                var diff = departure_time - now;
+                var minutes = Math.round((diff / 1000) / 60);
+                paragraph.innerHTML = minutes;
+            }else{
+                paragraph.innerHTML = "?";
             }
-            // Replace deleted rows with new ones
-            for (var y = 0; y < numDeleted; y++) {
-                console.log("delete: " + stoplist[0]);
-                stoplist.splice(0, 1);
-				if(stoplist[numRows - 1]){
-					addRow(stoplist[numRows - 1]);
-					console.log("add: " + stoplist[numRows - 1]);
-				}else{
-					console.log("Stoptimess in array < set ammout");
-				}
-            }
-            var departure_time = moment(stoplist[0].departure_time);
-            var diff = departure_time - now;
-            var minutes = Math.round((diff / 1000) / 60);
-            paragraph.innerHTML = minutes;
         }
     </script>
 </body>

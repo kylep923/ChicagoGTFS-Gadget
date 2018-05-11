@@ -163,31 +163,53 @@
        function addRow(row) {
             var table = document.getElementById("stoptable");
             let now = moment();
-            let departure_time = moment(row.departure_time).format('hh:mm');
+            if(row.departure_time){
+                let departure_time = moment(row.departure_time).format('hh:mm');
 
-            // Get minutes difference b/t now and the departure time
-            var diff = departure_time - now;
-            var minutes = Math.round((diff / 1000) / 60);
+                // Get minutes difference b/t now and the departure time
+                var diff = departure_time - now;
+                var minutes = Math.round((diff / 1000) / 60);
 
-            var tr = document.createElement('tr');
+                var tr = document.createElement('tr');
 
-            var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            var td3 = document.createElement('td');
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
 
-            var text1 = document.createTextNode(row.route);
-            var text2 = document.createTextNode(row.destination);
-            var text3 = document.createTextNode(departure_time);
+                var text1 = document.createTextNode(row.route);
+                var text2 = document.createTextNode(row.destination);
+                var text3 = document.createTextNode(departure_time);
 
-            td1.appendChild(text1);
-            td2.appendChild(text2);
-            td3.appendChild(text3);
+                td1.appendChild(text1);
+                td2.appendChild(text2);
+                td3.appendChild(text3);
 
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
 
-            table.appendChild(tr);
+                table.appendChild(tr);
+            }else{
+                var tr = document.createElement('tr');
+
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+
+                var text1 = document.createTextNode("Sorry");
+                var text2 = document.createTextNode("No Stops");
+                var text3 = document.createTextNode("At This Time");
+
+                td1.appendChild(text1);
+                td2.appendChild(text2);
+                td3.appendChild(text3);
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+
+                table.appendChild(tr);
+            }
         }
 
 
@@ -237,15 +259,19 @@
             document.getElementById("myDiv").appendChild(table);
             var ct = 0;
             var templist = [];
-            for (var i = 0; len = res.length, i < len; i++) {
-                var departure_time = moment(res[i].departure_time);
-                if (departure_time > now) {
-                    templist.push(res[i]);
+            if(res.length > 0){
+                for (var i = 0; len = res.length, i < len; i++) {
+                    var departure_time = moment(res[i].departure_time);
+                    if (departure_time > now) {
+                        templist.push(res[i]);
+                    }
+                    if (departure_time > now && ct < numRows) {
+                        ct++;
+                        addRow(res[i]);
+                    }
                 }
-                if (departure_time > now && ct < numRows) {
-                    ct++;
-                    addRow(res[i]);
-                }
+            }else{
+                addRow({});
             }
             stoplist = templist;
             console.log(stoplist);
@@ -267,37 +293,67 @@
         function updateList() {
             var table = document.getElementById("stoptable");
             var now = moment();
-            numDeleted = 0;
-            // Loop through the table rows and check if the stop times have expired
-            current_index = 0;
-            for (var x = 1; x < table.rows.length; x++) {
-                var departure_time = moment(stoplist[current_index].departure_time);
-                if (now > departure_time) {
+            if(stoplist.length > 0 && table.rows.length > 0){
+                if(table.rows[0].cells[0].innerHTML = "Sorry"){
                     table.deleteRow(1);
-                    numDeleted++;
                 }
-                current_index++;
-            }
-            // Replace deleted rows with new ones
-            for (var y = 0; y < numDeleted; y++) {
-                console.log("delete: " + stoplist[0]);
-                stoplist.splice(0, 1);
-				if(stoplist[numRows - 1]){
-					addRow(stoplist[numRows - 1]);
-					console.log("add: " + stoplist[numRows - 1]);
-				}else{
-					console.log("Stoptimess in array < set ammout");
-				}
-            }
-            current_index = 0;
-            for (var x = 1; x < table.rows.length; x++) {
-                var departure_time = moment(stoplist[current_index].departure_time);
-                // Calc mins before departure
-                var diff = departure_time - now;
-                var minutes = Math.round((diff / 1000) / 60);
-                //console.log(table.rows[x].cells[2].innerHTML);
-                table.rows[x].cells[2].innerHTML = departure_time.format('hh:mm');
-                current_index++;
+                numDeleted = 0;
+                // Loop through the table rows and check if the stop times have expired
+                current_index = 0;
+                for (var x = 1; x < table.rows.length; x++) {
+                    var departure_time = moment(stoplist[current_index].departure_time);
+                    if (now > departure_time) {
+                        table.deleteRow(1);
+                        numDeleted++;
+                    }
+                    current_index++;
+                }
+                // Replace deleted rows with new ones
+                for (var y = 0; y < numDeleted; y++) {
+                    console.log("delete: " + stoplist[0]);
+                    stoplist.splice(0, 1);
+                    if(stoplist[numRows - 1]){
+                        addRow(stoplist[numRows - 1]);
+                        console.log("add: " + stoplist[numRows - 1]);
+                    }else{
+                        console.log("Stoptimess in array < set ammout");
+                    }
+                }
+                current_index = 0;
+                for (var x = 1; x < table.rows.length; x++) {
+                    var departure_time = moment(stoplist[current_index].departure_time);
+                    // Calc mins before departure
+                    var diff = departure_time - now;
+                    var minutes = Math.round((diff / 1000) / 60);
+                    var hours = minutes / 60;
+                    if(hours >= 1){
+                        minutes = minutes - (hours * 60);
+                        table.rows[x].cells[2].innerHTML = hours + "h " + minutes + "m";
+                    }else{
+                        table.rows[x].cells[2].innerHTML = minutes;
+                    }
+                    current_index++;
+                }else{
+                    var tr = document.createElement('tr');
+
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3 = document.createElement('td');
+
+                    var text1 = document.createTextNode("Sorry");
+                    var text2 = document.createTextNode("No Stops");
+                    var text3 = document.createTextNode("At This Time");
+
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+                    td3.appendChild(text3);
+
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+
+                    table.appendChild(tr);
+                }
             }
         }
     </script>
