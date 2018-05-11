@@ -206,7 +206,7 @@
             var departure_time = moment(stoplist[0].departure_time);
             var diff = departure_time - now;
             var minutes = Math.round((diff / 1000) / 60);
-            paragraph.innerHTML = departure_time.format('hh:mm');
+            paragraph.innerHTML = minutes;
         }
     </script>
 </body>
