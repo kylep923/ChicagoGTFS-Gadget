@@ -173,7 +173,7 @@
                     minutes = minutes - (hours * 60);
                     departure_time = hours + "h " + minutes + "m";
                 }else{
-                    departure_time = minutes + "min";
+                    departure_time = minutes + " min";
                 }
                 var tr = document.createElement('tr');
 
@@ -335,7 +335,7 @@
                         minutes = minutes - (hours * 60);
                         table.rows[x].cells[2].innerHTML = hours + "h " + minutes + "m";
                     }else{
-                        table.rows[x].cells[2].innerHTML = minutes + "min";
+                        table.rows[x].cells[2].innerHTML = minutes + " min";
                     }
                     current_index++;
                 }
