@@ -164,7 +164,6 @@
             var table = document.getElementById("stoptable");
             let now = moment();
             let departure_time = moment(row.departure_time).format('hh:mm');
-            departure_time.format('hh:mm');
 
             // Get minutes difference b/t now and the departure time
             var diff = departure_time - now;

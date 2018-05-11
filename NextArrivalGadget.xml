@@ -135,8 +135,7 @@
        function addRow(row) {
             let paragraph = document.getElementById("paragraph");
             let now = moment();
-            let departure_time = moment(row.departure_time);
-            departure_time.format('hh:mm');
+            let departure_time = moment(row.departure_time).format('hh:mm');
             // Get minutes difference b/t now and the departure time
             let diff = departure_time - now;
             let minutes = Math.round((diff / 1000) / 60);
