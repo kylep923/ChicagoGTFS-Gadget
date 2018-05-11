@@ -67,7 +67,7 @@
         // INIT GLOBALS
         if (typeof Client != "undefined" && typeof(Client.getDeviceTimeZoneName) == "function") {
             moment.tz.setDefault(Client.getDeviceTimeZoneID());
-            timezone = Client.getDeviceTimeZoneName();
+            timezone = Client.getDeviceTimeID();
         }
         var curr_day = moment();
         console.log(curr_day.format());
